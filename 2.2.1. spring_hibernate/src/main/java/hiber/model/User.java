@@ -1,5 +1,7 @@
 package hiber.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,6 +11,10 @@ public class User {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
+
+   @OneToOne(mappedBy = "owner")
+   @Cascade(org.hibernate.annotations.CascadeType.ALL)
+   private Car carID;
 
    @Column(name = "name")
    private String firstName;
@@ -57,5 +63,12 @@ public class User {
 
    public void setEmail(String email) {
       this.email = email;
+   }
+
+   public Car getCarID() {
+      return carID;
+   }
+   public void setCarID(Car carID) {
+      this.carID = carID;
    }
 }
