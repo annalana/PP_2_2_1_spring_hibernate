@@ -34,21 +34,10 @@ public class UserDaoImp implements UserDao {
 
    @Override
    public User getUserByCar(String model, int series) {
-      Transaction transaction = null;
-      User user = null;
-      try (Session session = sessionFactory.openSession();) {
-         transaction = session.beginTransaction();
-         Query query = session.createQuery("select owner from Car where series=:seriesNum and model=:modelName");
-         query.setParameter("modelName", model);
-         query.setParameter("seriesNum", series);
-         user = (User)(query.getResultList().get(0));
-         transaction.commit();
-      } catch (HibernateException e) {
-         if (transaction != null) {
-            transaction.rollback();
-         }
-         e.printStackTrace();
-      }
-      return user;
+      Query query = sessionFactory.getCurrentSession()
+              .createQuery("select owner from Car where series=:seriesNum and model=:modelName");
+      query.setParameter("modelName", model);
+      query.setParameter("seriesNum", series);
+      return (User)(query.getResultList().get(0));
    }
 }
