@@ -38,11 +38,10 @@ public class UserDaoImp implements UserDao {
       User user = null;
       try (Session session = sessionFactory.openSession();) {
          transaction = session.beginTransaction();
-         Query query = session.createQuery("from Car where series=:seriesNum and model=:modelName");
+         Query query = session.createQuery("select owner from Car where series=:seriesNum and model=:modelName");
          query.setParameter("modelName", model);
          query.setParameter("seriesNum", series);
-         Car car = (Car)(query.getResultList().get(0));
-         user = car.getOwner();
+         user = (User)(query.getResultList().get(0));
          transaction.commit();
       } catch (HibernateException e) {
          if (transaction != null) {

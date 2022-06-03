@@ -21,6 +21,10 @@ public class Car {
         this.series = series;
         this.model = model;
     }
+    public Car(int series, String model) {
+        this.series = series;
+        this.model = model;
+    }
 
     public String getModel() {
         return model;
